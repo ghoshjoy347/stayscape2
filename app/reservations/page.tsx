@@ -12,6 +12,9 @@ async function getData(userId: string) {
       userId: userId,
     },
     select: {
+      id: true,
+      startDate: true,
+      endDate: true,
       Home: {
         select: {
           id: true,
@@ -30,6 +33,15 @@ async function getData(userId: string) {
   });
 
   return data;
+}
+
+async function deleteReservation(homeId: string, userId: string) {
+  await prisma.reservation.deleteMany({
+    where: {
+      userId: userId,
+      homeId: homeId,
+    },
+  });
 }
 
 export default async function ReservationsRoute() {
@@ -51,20 +63,25 @@ export default async function ReservationsRoute() {
       ) : (
         <div className="grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 grid-cols-1 gap-8 mt-8">
           {data.map((item) => (
-            <ListingCard
-              key={item.Home?.id}
-              description={item.Home?.description as string}
-              location={item.Home?.country as string}
-              pathName="/favorites"
-              homeId={item.Home?.id as string}
-              imagePath={item.Home?.photo as string}
-              price={item.Home?.price as number}
-              userId={user.id}
-              favoriteId={item.Home?.Favorite[0]?.id as string}
-              isInFavoriteList={
-                (item.Home?.Favorite.length as number) > 0 ? true : false
-              }
-            />
+            <>
+              <ListingCard
+                key={item.Home?.id}
+                reservationId={item.id}
+                startDate={item.startDate}
+                endDate={item.endDate}
+                description={item.Home?.description as string}
+                location={item.Home?.country as string}
+                pathName="/favorites"
+                homeId={item.Home?.id as string}
+                imagePath={item.Home?.photo as string}
+                price={item.Home?.price as number}
+                userId={user.id}
+                favoriteId={item.Home?.Favorite[0]?.id as string}
+                isInFavoriteList={
+                  (item.Home?.Favorite.length as number) > 0 ? true : false
+                }
+              />
+            </>
           ))}
         </div>
       )}

@@ -6,16 +6,27 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRange } from "react-date-range";
 import { useState } from "react";
 import { eachDayOfInterval } from "date-fns";
+import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
+import Link from "next/link";
+
+import { ReservationSubmitButton } from "@/app/components/SubmitButtons";
+import { Button } from "@/components/ui/button";
 
 export function SelectCalender({
   reservation,
+  user,
+  price,
+  homeId
 }: {
   reservation:
-    | {
-        startDate: Date;
-        endDate: Date;
-      }[]
-    | undefined;
+  | {
+    startDate: Date;
+    endDate: Date;
+  }[]
+  | undefined,
+  user: KindeUser,
+  price: number,
+  homeId: string
 }) {
   const [state, setState] = useState([
     {
@@ -56,6 +67,14 @@ export function SelectCalender({
         direction="vertical"
         disabledDates={disabledDates}
       />
+
+      {user?.id ? (
+        <ReservationSubmitButton price={price} homeId={homeId} userId={user?.id} state={state} />
+      ) : (
+        <Button className="w-full" asChild>
+          <Link href="/api/auth/login">Make a Reservation</Link>
+        </Button>
+      )}
     </>
   );
 }

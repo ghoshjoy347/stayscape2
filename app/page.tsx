@@ -6,6 +6,7 @@ import { SkeltonCard } from "./components/SkeletonCard";
 import { NoItems } from "./components/NoItem";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import Slider from "@/components/ui/Slider";
+import Footer from "./components/Footer";
 
 async function getData({
   searchParams,
@@ -108,6 +109,7 @@ async function ShowItems({
         ))}
       </div>
     )}
+    <Footer/>
     </>
   )
 }

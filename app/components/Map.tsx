@@ -11,19 +11,18 @@ const ICON = icon({
   iconSize: [50, 50],
 });
 
-export default function Map({ locationValue }: { locationValue: string }) {
+export default function Map({ locationValue, latLang }: { locationValue: string, latLang: [number, number] | undefined }) {
   const { getCityByValue } = useCities();
   const cityLatLang = getCityByValue(locationValue)?.latLang;
 
   // TODO: remove following 2 lines
   const { getCountryByValue } = useCountries();
-  const latLang = getCountryByValue(locationValue)?.latLang;
+  // const latLang = getCountryByValue(locationValue)?.latLang;
   return (
     <MapContainer
       scrollWheelZoom={false}
       className="h-[50vh] rounded-lg relative z-0"
       center={latLang ?? [52.505, -0.09]}
-      // center={cityLatLang ?? [52.505, -0.09]}
       zoom={8}
     >
       <TileLayer

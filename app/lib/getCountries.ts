@@ -22,7 +22,8 @@ export const useCountries = () => {
   };
 
   const getCountryByValue = (value: string) => {
-    return countriesFormatted.find((item) => item.value === value);
+    const country = countriesFormatted.find((item) => item.value === value);
+    return country ? country : null;
   };
 
   return {
@@ -40,8 +41,58 @@ export const useCities = () => {
     return cityFormatted.find((item) => item.value === value);
   };
 
+  const getCountryByValue = (value: string) => {
+    return countriesFormatted.find((item) => item.value === value);
+  };
+
+  const getCityByCountryAndName = (countryCode: string, cityName: string) => {
+    return City.getCitiesOfCountry(countryCode)?.find(
+      (item) => item.name === cityName
+    );
+  };
+
+  const getAllCountries = () => {
+    return Country.getAllCountries().map((item) => ({
+      value: item.isoCode,
+      label: item.name,
+      flag: item.flag,
+    }));
+  };
+
+  const getCityByCountry = (countryCode: string) => {
+    return City.getCitiesOfCountry(countryCode)?.map((item) => ({
+      value: item.name,
+      label: item.name,
+      flag: item.countryCode,
+      latLang: [item.latitude, item.longitude],
+    }));
+  };
+
+  const getStateByCountry = (countryCode: string) => {
+    return State.getStatesOfCountry(countryCode)?.map((item) => ({
+      value: item.isoCode,
+      label: item.name,
+      flag: item.countryCode,
+    }));
+  };
+
+  const getCityByState = (countyCode: string, stateCode: string) => {
+    return City.getCitiesOfState(countyCode, stateCode)?.map((item) => ({
+      value: item.name,
+      label: item.name,
+      flag: item.countryCode,
+      latLang: [item.latitude, item.longitude],
+    }));
+  };
+
   return {
+    getAllCountries,
     getAllCities,
     getCityByValue,
+    getCityByCountry,
+    getStateByCountry,
+    getCityByState,
+    getCountryByValue,
+    getCityByCountryAndName,
   };
 };

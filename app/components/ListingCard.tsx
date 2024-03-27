@@ -7,7 +7,8 @@ import { DeleteFromFavorite, addToFavorite, deleteReservation } from "../actions
 interface iAppProps {
   imagePath: string;
   description: string;
-  location: string;
+  city: string;
+  country: string;
   price: number;
   userId: string | undefined;
   isInFavoriteList: boolean;
@@ -23,7 +24,8 @@ interface iAppProps {
 export function ListingCard({
   description,
   imagePath,
-  location,
+  city,
+  country,
   price,
   userId,
   favoriteId,
@@ -34,11 +36,6 @@ export function ListingCard({
   startDate,
   endDate,
 }: iAppProps) {
-  const { getCityByValue } = useCities()
-  const city = getCityByValue(location)
-  // TODO: remove following 2 lines
-  const { getCountryByValue } = useCountries()
-  const country = getCountryByValue(location)
 
   return (
     <div className="flex flex-col">
@@ -82,8 +79,7 @@ export function ListingCard({
       </div>
 
       <Link href={`/home/${homeId}`} className="mt-2">
-        <h3 className="font-medium text-base">{country?.flag} {country?.label} , {country?.region}</h3>
-        {/* <h3 className="font-medium text-base">{city?.flag} {city?.label} </h3> */}
+        <h3 className="font-medium text-base">{city} {country} </h3>
         <p className="text-muted-foreground text-sm line-clamp-2">{description}</p>
         <p className="pt-2 text-muted-foreground">
           <span className="font-medium text-black">₹ {price}</span> / Night</p>

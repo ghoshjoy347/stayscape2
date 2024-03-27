@@ -26,8 +26,8 @@ async function getData(homeid: string) {
       title: true,
       categoryName: true,
       price: true,
+      city: true,
       country: true,
-      // city: true,
       Reservation: {
         where: {
           homeId: homeid,
@@ -52,14 +52,13 @@ export default async function HomeRoute({
   params: { id: string };
 }) {
   const data = await getData(params.id);
-  const { getCityByValue } = useCities();
-  // const city = getCityByValue(data?.city as string);
-  const { getCountryByValue } = useCountries();
-  const country = getCountryByValue(data?.country as string);
+  const { getCityByValue, getCityByCountryAndName } = useCities();
+  const city = getCityByValue(data?.city as string);
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
-
+  const anotherCity = getCityByCountryAndName(data?.country as string, data?.city as string);
+  const latLang: [number, number] = [Number(anotherCity?.latitude), Number(anotherCity?.longitude)]
 
   return (
     <>
@@ -78,7 +77,7 @@ export default async function HomeRoute({
         <div className="flex justify-between gap-x-24 mt-8">
           <div className="w-2/3">
             <h3 className="text-xl font-medium">
-              {country?.flag} {country?.label} , {country?.region}
+              {city?.flag} {city?.label}
             </h3>
             <div className="flex gap-x-2 text-muted-foreground">
               <p>{data?.guests} Guests</p> | <p>{data?.bedrooms} Bedrooms</p> | {"  "}
@@ -110,7 +109,7 @@ export default async function HomeRoute({
 
             <Separator className="my-7" />
 
-            <HomeMap locationValue={country?.value as string} />
+            <HomeMap locationValue={city?.value as string} latLang={latLang} />
 
           </div>
 

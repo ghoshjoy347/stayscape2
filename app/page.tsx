@@ -5,6 +5,8 @@ import prisma from "./lib/db";
 import { SkeltonCard } from "./components/SkeletonCard";
 import { NoItems } from "./components/NoItem";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import Slider from "@/components/ui/Slider";
+import Footer from "./components/Footer";
 
 async function getData({
   searchParams,
@@ -89,23 +91,25 @@ async function ShowItems({
 
   return (
     <>
+    <Slider/>
     {data.length == 0 ? (
       <NoItems title={"Sorry no Listings are found in this Category"} description={"Check other categories or your Listing"}/>
     ):(
       <div className="grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-8">
         {data.map((item) => (
-          <ListingCard key={item.id} 
-          description={item.description as string} 
-          imagePath={item.photo as string} 
-          location={item.country as string} 
-          price={item.price as number} 
-          userId={user?.id} 
-          isInFavoriteList={item.Favorite.length > 0 ? true : false} 
-          favoriteId={item.Favorite[0]?.id} 
-          homeId={item.id} pathName="/"/>
+          <ListingCard key={item.id}
+          description={item.description as string}
+          imagePath={item.photo as string}
+          location={item.country as string}
+          price={item.price as number}
+          userId={user?.id}
+          isInFavoriteList={item.Favorite.length > 0 ? true : false}
+          favoriteId={item.Favorite[0]?.id}
+          homeId={item.id} pathName="/" reservationId={undefined} startDate={undefined} endDate={undefined}/>
         ))}
       </div>
     )}
+    <Footer/>
     </>
   )
 }

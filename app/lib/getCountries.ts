@@ -76,6 +76,12 @@ export const useCities = () => {
     }));
   };
 
+  const getStateByCountryAndName = (countryCode: string, stateName: string) => {
+    return State.getStatesOfCountry(countryCode)?.find(
+      (item) => item.name === stateName
+    );
+  };
+
   const getCityByState = (countyCode: string, stateCode: string) => {
     return City.getCitiesOfState(countyCode, stateCode)?.map((item) => ({
       value: item.name,
@@ -93,6 +99,7 @@ export const useCities = () => {
     getStateByCountry,
     getCityByState,
     getCountryByValue,
+    getStateByCountryAndName,
     getCityByCountryAndName,
   };
 };

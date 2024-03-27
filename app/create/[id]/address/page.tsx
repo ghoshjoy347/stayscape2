@@ -9,11 +9,12 @@ import dynamic from "next/dynamic";
 import { useState } from "react";
 
 export default function AddressRoutw({ params }: { params: { id: string } }) {
-    const { getAllCities, getCityByCountry, getAllCountries, getStateByCountry, getCityByState } = useCities();
+    const { getAllCountries, getStateByCountry, getCityByState, getCityByCountryAndName, getCountryByValue, getStateByCountryAndName } = useCities();
     const [locationValue, setLocationValue] = useState("");
     const [countryValue, setCountryValue] = useState("");
     const [stateValue, setStateValue] = useState("");
     const [cityValue, setCityValue] = useState("");
+    const [latLang, setLatLang] = useState<[number, number] | undefined>(undefined);
 
     const LazyMap = dynamic(() => import("@/app/components/Map"), {
         ssr: false,
@@ -32,7 +33,11 @@ export default function AddressRoutw({ params }: { params: { id: string } }) {
                 <input type="hidden" name="cityValue" value={cityValue} />
                 <div className="w-3/5 mx-auto mb-36">
                     <div className="mb-5">
-                        <Select required onValueChange={(value) => setCountryValue(value)}>
+                        <Select required onValueChange={(value) => {
+                            setCountryValue(value)
+                            let country = getCountryByValue(value)
+                            setLatLang(country?.latLang)
+                        }}>
                             <SelectTrigger className="w-full">
                                 <SelectValue placeholder="Select a Country" />
                             </SelectTrigger>
@@ -50,7 +55,9 @@ export default function AddressRoutw({ params }: { params: { id: string } }) {
                         </Select>
                     </div>
                     <div className="mb-5">
-                        <Select required onValueChange={(value) => setStateValue(value)}>
+                        <Select required onValueChange={(value) => {
+                            setStateValue(value)
+                        }}>
                             <SelectTrigger className="w-full">
                                 <SelectValue placeholder="Select a State" />
                             </SelectTrigger>
@@ -68,7 +75,11 @@ export default function AddressRoutw({ params }: { params: { id: string } }) {
                         </Select>
                     </div>
                     <div className="mb-5">
-                        <Select required onValueChange={(value) => setCityValue(value)}>
+                        <Select required onValueChange={(value) => {
+                            setCityValue(value)
+                            let city = getCityByCountryAndName(countryValue, value)
+                            setLatLang([Number(city?.latitude), Number(city?.longitude)])
+                        }}>
                             <SelectTrigger className="w-full">
                                 <SelectValue placeholder="Select a City" />
                             </SelectTrigger>
@@ -85,7 +96,7 @@ export default function AddressRoutw({ params }: { params: { id: string } }) {
                             </SelectContent>
                         </Select>
                     </div>
-                    <LazyMap locationValue={locationValue} />
+                    <LazyMap locationValue={locationValue} latLang={latLang} />
                 </div>
                 <CreatioBottomBar />
             </form>

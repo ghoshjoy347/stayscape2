@@ -47,7 +47,7 @@ export function SearchModalCompnent() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="rounded-full py-2 px-5 border flex items-center cursor-pointer outline outline-zinc-300 outline-1">
+      <div className="rounded-full py-2 px-5 border flex items-center cursor-pointer outline outline-zinc-300 outline-1">
           <div className="flex h-full divide-x font-medium">
             <p className="px-12">Location</p>
             <p className="px-12">Add Rooms</p>

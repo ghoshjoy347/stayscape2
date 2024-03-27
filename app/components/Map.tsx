@@ -2,7 +2,7 @@
 
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import { useCountries } from "../lib/getCountries";
+import { useCountries, useCities } from "../lib/getCountries";
 import { icon } from "leaflet";
 
 const ICON = icon({
@@ -11,9 +11,13 @@ const ICON = icon({
   iconSize: [50, 50],
 });
 
-export default function Map({ locationValue }: { locationValue: string }) {
+export default function Map({ locationValue, latLang }: { locationValue: string, latLang: [number, number] | undefined }) {
+  const { getCityByValue } = useCities();
+  const cityLatLang = getCityByValue(locationValue)?.latLang;
+
+  // TODO: remove following 2 lines
   const { getCountryByValue } = useCountries();
-  const latLang = getCountryByValue(locationValue)?.latLang;
+  // const latLang = getCountryByValue(locationValue)?.latLang;
   return (
     <MapContainer
       scrollWheelZoom={false}

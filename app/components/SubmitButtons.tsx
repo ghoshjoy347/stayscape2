@@ -145,6 +145,10 @@ export function DeleteFromFavoriteButton() {
 
 export function ReservationSubmitButton({ price, homeId, userId, state }: { price: number, homeId: string, userId: string, state: any }) {
   const { pending } = useFormStatus();
+  const diffTime = Math.abs(state[0].endDate - state[0].startDate);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+  const amt = price * diffDays;
 
   return (
     <>
@@ -153,14 +157,17 @@ export function ReservationSubmitButton({ price, homeId, userId, state }: { pric
           <Loader2 className="w-4 h-4 animate-spin mr-2" /> Please wait
         </Button>
       ) : (
-        <Button className="w-full" type="submit"
-          onClick={async (e) => {
-            e.preventDefault();
-            await makePayment(price, homeId, userId, state);
-          }}
-        >
-          Make a Reservation
-        </Button>
+        <>
+          <p className="text-muted-foreground text-lg m-4">Total Amount: {amt}</p>
+          <Button className="w-full" type="submit"
+            onClick={async (e) => {
+              e.preventDefault();
+              await makePayment(price, homeId, userId, state);
+            }}
+          >
+            Make a Reservation
+          </Button>
+        </>
       )}
     </>
   );

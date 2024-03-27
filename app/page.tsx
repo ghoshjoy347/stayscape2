@@ -11,7 +11,7 @@ import Footer from "./components/Footer";
 async function getData({
   searchParams,
   userId
-} : {
+}: {
   userId: string | undefined
   searchParams?: {
     filter?: string;
@@ -20,7 +20,7 @@ async function getData({
     room?: string;
     //bathroom?: string;
   };
-}){
+}) {
   const data = await prisma.home.findMany({
     where: {
       addedCategory: true,
@@ -32,12 +32,13 @@ async function getData({
       bedrooms: searchParams?.room ?? undefined,
       //bathrooms: searchParams?.bathroom ?? undefined,
     },
-    select:{
+    select: {
       photo: true,
       id: true,
       price: true,
       description: true,
       country: true,
+      city: true,
       Favorite: {
         where: {
           userId: userId ?? undefined,
@@ -52,7 +53,7 @@ async function getData({
 
 export default function Home({
   searchParams
-} : {
+}: {
   searchParams?: {
     filter?: string;
     country?: string;
@@ -63,10 +64,10 @@ export default function Home({
 }) {
   return (
     <div className="container mx-auto px-5 lg:px-10">
-      <MapFilterItems/>
+      <MapFilterItems />
 
-      <Suspense key={searchParams?.filter} fallback={<SkeletonLoading/>}>
-        <ShowItems searchParams={searchParams}/>
+      <Suspense key={searchParams?.filter} fallback={<SkeletonLoading />}>
+        <ShowItems searchParams={searchParams} />
       </Suspense>
 
     </div>
@@ -76,7 +77,7 @@ export default function Home({
 
 async function ShowItems({
   searchParams,
-} : {
+}: {
   searchParams?: {
     filter?: string;
     country?: string;
@@ -84,32 +85,33 @@ async function ShowItems({
     room?: string;
     //bathroom?: string;
   }
-}){
-  const {getUser} = getKindeServerSession()
+}) {
+  const { getUser } = getKindeServerSession()
   const user = await getUser()
-  const data = await getData({searchParams: searchParams, userId: user?.id});
+  const data = await getData({ searchParams: searchParams, userId: user?.id });
 
   return (
     <>
-    <Slider/>
-    {data.length == 0 ? (
-      <NoItems title={"Sorry no Listings are found in this Category"} description={"Check other categories or your Listing"}/>
-    ):(
-      <div className="grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-8">
-        {data.map((item) => (
-          <ListingCard key={item.id}
-          description={item.description as string}
-          imagePath={item.photo as string}
-          location={item.country as string}
-          price={item.price as number}
-          userId={user?.id}
-          isInFavoriteList={item.Favorite.length > 0 ? true : false}
-          favoriteId={item.Favorite[0]?.id}
-          homeId={item.id} pathName="/" reservationId={undefined} startDate={undefined} endDate={undefined}/>
-        ))}
-      </div>
-    )}
-    <Footer/>
+      <Slider />
+      {data.length == 0 ? (
+        <NoItems title={"Sorry no Listings are found in this Category"} description={"Check other categories or your Listing"} />
+      ) : (
+        <div className="grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-8">
+          {data.map((item) => (
+            <ListingCard key={item.id}
+              description={item.description as string}
+              imagePath={item.photo as string}
+              city={item.city as string}
+              country={item.country as string}
+              price={item.price as number}
+              userId={user?.id}
+              isInFavoriteList={item.Favorite.length > 0 ? true : false}
+              favoriteId={item.Favorite[0]?.id}
+              homeId={item.id} pathName="/" reservationId={undefined} startDate={undefined} endDate={undefined} />
+          ))}
+        </div>
+      )}
+      <Footer />
     </>
   )
 }
@@ -117,14 +119,14 @@ async function ShowItems({
 function SkeletonLoading() {
   return (
     <div className="grid lg:grid-cols-4 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-8">
-      <SkeltonCard/>
-      <SkeltonCard/>
-      <SkeltonCard/>
-      <SkeltonCard/>
-      <SkeltonCard/>
-      <SkeltonCard/>
-      <SkeltonCard/>
-      <SkeltonCard/>
+      <SkeltonCard />
+      <SkeltonCard />
+      <SkeltonCard />
+      <SkeltonCard />
+      <SkeltonCard />
+      <SkeltonCard />
+      <SkeltonCard />
+      <SkeltonCard />
     </div>
   )
 }

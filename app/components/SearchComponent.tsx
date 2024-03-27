@@ -21,7 +21,7 @@ import {
 
 import { Search } from "lucide-react";
 import { useState } from "react";
-import { useCountries } from "../lib/getCountries";
+import { useCountries, useCities } from "../lib/getCountries";
 import { HomeMap } from "./HomeMap";
 import { Button } from "@/components/ui/button";
 import { CreationSubmit } from "./SubmitButtons";
@@ -31,7 +31,8 @@ import { Counter } from "./Counter";
 export function SearchModalCompnent() {
   const [step, setStep] = useState(1);
   const [locationValue, setLocationValue] = useState("");
-  const { getAllCountries } = useCountries();
+  const [latLang, setLatLang] = useState<[number, number] | undefined>(undefined);
+  const { getAllCountries, getCountryByValue } = useCities();
 
   function SubmitButtonLocal() {
     if (step === 1) {
@@ -71,7 +72,10 @@ export function SearchModalCompnent() {
 
               <Select
                 required
-                onValueChange={(value) => setLocationValue(value)}
+                onValueChange={(value) => {
+                  setLocationValue(value);
+                  setLatLang(getCountryByValue(value)?.latLang);
+                }}
                 value={locationValue}
               >
                 <SelectTrigger className="w-full">
@@ -79,16 +83,17 @@ export function SearchModalCompnent() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectLabel>Countries</SelectLabel>
+                    <SelectLabel>Countires</SelectLabel>
                     {getAllCountries().map((item) => (
                       <SelectItem key={item.value} value={item.value}>
-                        {item.flag} {item.label} / {item.region}
+                        {item.flag} {item.label}
                       </SelectItem>
                     ))}
+
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <HomeMap locationValue={locationValue} />
+              <HomeMap locationValue={locationValue} latLang={latLang} />
             </>
           ) : (
             <>

@@ -8,9 +8,9 @@ import { CreateDescription } from "@/app/actions";
 
 export default function DescriptionPage({
     params,
-  }: {
+}: {
     params: { id: string };
-  }) {
+}) {
     return (
         <>
             <div className="w-3/5 mx-auto">
@@ -18,51 +18,51 @@ export default function DescriptionPage({
             </div>
 
             <form action={CreateDescription}>
-            <input type="hidden" name="homeId" value={params.id} />
+                <input type="hidden" name="homeId" value={params.id} />
                 <div className="w-3/5 mx-auto mt-10 flex flex-col gap-y-5 mb-36">
                     <div className="flex flex-col gap-y-2">
                         <Label>Title</Label>
-                        <Input name="title" type="text" required placeholder="Short and Simple"/>
+                        <Input name="title" type="text" required placeholder="Short and Simple" />
                     </div>
                     <div className="flex flex-col gap-y-2">
                         <Label>Description</Label>
-                        <Textarea name="description" required placeholder="Describe your Stay"/>
+                        <Textarea name="description" required placeholder="Describe your Stay" />
                     </div>
                     <div className="flex flex-col gap-y-2">
                         <Label>Price</Label>
-                        <Input type="number" name="price" required placeholder="Price per Night in ₹" min={1000}/>
+                        <Input type="number" name="price" required placeholder="Price per Night in ₹" min={1000} />
                     </div>
                     <div className="flex flex-col gap-y-2">
                         <Label>Image</Label>
-                        <Input type="file" name="image" required/>
+                        <Input type="file" name="image" required />
                     </div>
                     <Card>
                         <CardHeader className="flex flex-col gap-y-5">
-                        <div className="flex items-center justify-between">
-                            <div className="flex flex-col">
-                                <h3 className="underline font-medium">Guests</h3>
-                                <p className="text-muted-foreground text-sm">Number of Guests ?</p>
+                            <div className="flex items-center justify-between">
+                                <div className="flex flex-col">
+                                    <h3 className="underline font-medium">Guests</h3>
+                                    <p className="text-muted-foreground text-sm">Number of Guests ?</p>
+                                </div>
+                                <Counter name="guest" />
                             </div>
-                            <Counter name="guest"/>
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <div className="flex flex-col">
-                                <h3 className="underline font-medium">Rooms</h3>
-                                <p className="text-muted-foreground text-sm">Number of Rooms ?</p>
+                            <div className="flex items-center justify-between">
+                                <div className="flex flex-col">
+                                    <h3 className="underline font-medium">Rooms</h3>
+                                    <p className="text-muted-foreground text-sm">Number of Rooms ?</p>
+                                </div>
+                                <Counter name="room" />
                             </div>
-                            <Counter name="room"/>
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <div className="flex flex-col">
-                                <h3 className="underline font-medium">Washroom</h3>
-                                <p className="text-muted-foreground text-sm">Number of Washrooms ?</p>
+                            <div className="flex items-center justify-between">
+                                <div className="flex flex-col">
+                                    <h3 className="underline font-medium">Washroom</h3>
+                                    <p className="text-muted-foreground text-sm">Number of Washrooms ?</p>
+                                </div>
+                                <Counter name="washroom" />
                             </div>
-                            <Counter name="washroom"/>
-                        </div>
-                        </CardHeader> 
+                        </CardHeader>
                     </Card>
-                    </div>
-                    <CreatioBottomBar/>
+                </div>
+                <CreatioBottomBar />
             </form>
         </>
     );

@@ -21,7 +21,7 @@ import {
 
 import { Search } from "lucide-react";
 import { useState } from "react";
-import { useCountries } from "../lib/getCountries";
+import { useCountries, useCities } from "../lib/getCountries";
 import { HomeMap } from "./HomeMap";
 import { Button } from "@/components/ui/button";
 import { CreationSubmit } from "./SubmitButtons";
@@ -31,6 +31,9 @@ import { Counter } from "./Counter";
 export function SearchModalCompnent() {
   const [step, setStep] = useState(1);
   const [locationValue, setLocationValue] = useState("");
+  const { getAllCities } = useCities();
+
+  // TODO: remove following line
   const { getAllCountries } = useCountries();
 
   function SubmitButtonLocal() {
@@ -85,6 +88,14 @@ export function SearchModalCompnent() {
                         {item.flag} {item.label} / {item.region}
                       </SelectItem>
                     ))}
+                    {/* 
+                    <SelectLabel>Cities</SelectLabel>
+                    {getAllCities().map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.flag} {item.label}
+                      </SelectItem>
+                    ))}
+                    */}
                   </SelectGroup>
                 </SelectContent>
               </Select>

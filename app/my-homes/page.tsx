@@ -65,6 +65,9 @@ export default async function MyHomes() {
               pathName="/my-homes"
               favoriteId={item.Favorite[0]?.id}
               isInFavoriteList={item.Favorite.length > 0 ? true : false}
+              reservationId=""
+              startDate={undefined}
+              endDate={undefined}
             />
           ))}
         </div>

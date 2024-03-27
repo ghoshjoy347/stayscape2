@@ -5,7 +5,7 @@ import { HomeMap } from "@/app/components/HomeMap";
 import { SelectCalender } from "@/app/components/SelectCalender";
 import { ReservationSubmitButton } from "@/app/components/SubmitButtons";
 import prisma from "@/app/lib/db";
-import { useCountries } from "@/app/lib/getCountries";
+import { useCountries, useCities } from "@/app/lib/getCountries";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
@@ -27,6 +27,7 @@ async function getData(homeid: string) {
       categoryName: true,
       price: true,
       country: true,
+      // city: true,
       Reservation: {
         where: {
           homeId: homeid,
@@ -51,6 +52,8 @@ export default async function HomeRoute({
   params: { id: string };
 }) {
   const data = await getData(params.id);
+  const { getCityByValue } = useCities();
+  // const city = getCityByValue(data?.city as string);
   const { getCountryByValue } = useCountries();
   const country = getCountryByValue(data?.country as string);
   const { getUser } = getKindeServerSession();

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useCountries } from "../lib/getCountries";
+import { useCountries, useCities } from "../lib/getCountries";
 import { AddToFavoriteButton, DeleteFromFavoriteButton, DeleteReservationButton } from "./SubmitButtons";
 import { DeleteFromFavorite, addToFavorite, deleteReservation } from "../actions";
 
@@ -34,6 +34,9 @@ export function ListingCard({
   startDate,
   endDate,
 }: iAppProps) {
+  const { getCityByValue } = useCities()
+  const city = getCityByValue(location)
+  // TODO: remove following 2 lines
   const { getCountryByValue } = useCountries()
   const country = getCountryByValue(location)
 
@@ -80,6 +83,7 @@ export function ListingCard({
 
       <Link href={`/home/${homeId}`} className="mt-2">
         <h3 className="font-medium text-base">{country?.flag} {country?.label} , {country?.region}</h3>
+        {/* <h3 className="font-medium text-base">{city?.flag} {city?.label} </h3> */}
         <p className="text-muted-foreground text-sm line-clamp-2">{description}</p>
         <p className="pt-2 text-muted-foreground">
           <span className="font-medium text-black">₹ {price}</span> / Night</p>

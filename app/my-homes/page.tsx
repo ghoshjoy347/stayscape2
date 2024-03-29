@@ -17,6 +17,7 @@ async function getData(userId: string) {
     select: {
       id: true,
       city: true,
+      country: true,
       photo: true,
       description: true,
       price: true,
@@ -60,7 +61,8 @@ export default async function MyHomes() {
               homeId={item.id}
               price={item.price as number}
               description={item.description as string}
-              location={item.city as string}
+              city={item.city as string}
+              country={item.country as string}
               userId={user.id}
               pathName="/my-homes"
               favoriteId={item.Favorite[0]?.id}

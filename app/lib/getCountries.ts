@@ -73,6 +73,7 @@ export const useCities = () => {
       value: item.isoCode,
       label: item.name,
       flag: item.countryCode,
+      latLang: [Number(item.latitude), Number(item.longitude)],
     }));
   };
 

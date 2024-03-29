@@ -34,7 +34,7 @@ export default function DescriptionPage({
                     </div>
                     <div className="flex flex-col gap-y-2">
                         <Label>Image</Label>
-                        <Input type="file" name="image" required />
+                        <Input type="file" name="image[]" multiple accept="image/*" required />
                     </div>
                     <Card>
                         <CardHeader className="flex flex-col gap-y-5">

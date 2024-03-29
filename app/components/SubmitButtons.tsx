@@ -7,6 +7,7 @@ declare global {
 }
 
 import { Button } from "@/components/ui/button"
+import { Toast } from "@/components/ui/toast";
 import { Heart, Loader2, Trash } from "lucide-react"
 import { useFormStatus } from "react-dom"
 
@@ -58,6 +59,7 @@ const makePayment = async (price: number,
         body: JSON.stringify(reservationData),
       }).then((t) => t.json());
 
+      
       alert("Reservation Successful");
     },
   };

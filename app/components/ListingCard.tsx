@@ -79,7 +79,7 @@ export function ListingCard({
       </div>
 
       <Link href={`/home/${homeId}`} className="mt-2">
-        <h3 className="font-medium text-base">{city} {country} </h3>
+        <h3 className="font-medium text-base">{city}, {country} </h3>
         <p className="text-muted-foreground text-sm line-clamp-2">{description}</p>
         <p className="pt-2 text-muted-foreground">
           <span className="font-medium text-black">₹ {price}</span> / Night</p>

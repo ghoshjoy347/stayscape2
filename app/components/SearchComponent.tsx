@@ -21,19 +21,20 @@ import {
 
 import { Search } from "lucide-react";
 import { useState } from "react";
-import { useCountries, useCities } from "../lib/getCountries";
+import { useCities } from "../lib/getCountries";
 import { HomeMap } from "./HomeMap";
 import { Button } from "@/components/ui/button";
 import { CreationSubmit } from "./SubmitButtons";
 import { Card, CardHeader } from "@/components/ui/card";
 import { Counter } from "./Counter";
-import { getAllStates, getStatesOfCountry } from "country-state-city/lib/state";
 
 export function SearchModalCompnent() {
   const [step, setStep] = useState(1);
-  const [locationValue, setLocationValue] = useState("");
+  const [countryValue, setCountryValue] = useState("");
+  const [stateValue, setStateValue] = useState("");
+  const [cityValue, setCityValue] = useState("");
   const [latLang, setLatLang] = useState<[number, number] | undefined>(undefined);
-  const { getAllCountries, getCountryByValue } = useCities();
+  const { getAllCountries, getStateByCountry, getCityByState, getCityByCountryAndName, getCountryByValue, getStateByCountryAndName } = useCities();
 
   function SubmitButtonLocal() {
     if (step === 1) {
@@ -49,7 +50,7 @@ export function SearchModalCompnent() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-      <div className="rounded-full py-2 px-5 border flex items-center cursor-pointer outline outline-zinc-300 outline-1">
+        <div className="rounded-full py-2 px-5 border flex items-center cursor-pointer outline outline-zinc-300 outline-1">
           <div className="flex h-full divide-x font-medium">
             <p className="px-12">Location</p>
             <p className="px-12">Add Rooms</p>
@@ -61,25 +62,23 @@ export function SearchModalCompnent() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <form className="gap-4 flex flex-col">
-          <input type="hidden" name="country" value={locationValue} />
+          <input type="hidden" name="city" value={cityValue} />
           {step === 1 ? (
             <>
               <DialogHeader>
-                <DialogTitle>Select a Country</DialogTitle>
+                <DialogTitle>Select a Location</DialogTitle>
                 <DialogDescription>
-                  Please Choose a Country
+                  Please Choose a Location, so that what you want
                 </DialogDescription>
               </DialogHeader>
-
-
 
               <Select
                 required
                 onValueChange={(value) => {
-                  setLocationValue(value);
+                  setCountryValue(value);
                   setLatLang(getCountryByValue(value)?.latLang);
                 }}
-                value={locationValue}
+                value={countryValue}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select a Country" />
@@ -96,70 +95,60 @@ export function SearchModalCompnent() {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-
-
-
               <Select
                 required
                 onValueChange={(value) => {
-                  setLocationValue(value);
-                  setLatLang(getStatesOfCountry(value)?.latLang);
+                  setStateValue(value);
                 }}
-                value={locationValue}
+                value={stateValue}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select a State" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectLabel>Countries</SelectLabel>
-                    {getAllCountries().map((item) => (
+                    <SelectLabel>States</SelectLabel>
+                    {getStateByCountry(countryValue)?.map((item) => (
                       <SelectItem key={item.value} value={item.value}>
-                        {item.flag} {item.label}
+                        {item.label}
                       </SelectItem>
                     ))}
 
                   </SelectGroup>
                 </SelectContent>
               </Select>
-
-
-
-
               <Select
                 required
                 onValueChange={(value) => {
-                  setLocationValue(value);
-                  setLatLang((value)?.latLang);
+                  setCityValue(value)
+                  let city = getCityByCountryAndName(countryValue, value)
+                  setLatLang([Number(city?.latitude), Number(city?.longitude)])
                 }}
-                value={locationValue}
+                value={cityValue}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select a City" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectLabel>Countries</SelectLabel>
-                    {getAllCountries().map((item) => (
+                    <SelectLabel>Cities</SelectLabel>
+                    {getCityByState(countryValue, stateValue)?.map((item) => (
                       <SelectItem key={item.value} value={item.value}>
-                        {item.flag} {item.label}
+                        {item.label}
                       </SelectItem>
                     ))}
 
                   </SelectGroup>
                 </SelectContent>
               </Select>
-
-
-
-              <HomeMap locationValue={locationValue} latLang={latLang} />
+              <HomeMap locationValue={cityValue} latLang={latLang} />
             </>
           ) : (
             <>
               <DialogHeader>
                 <DialogTitle>Select all the info you need</DialogTitle>
                 <DialogDescription>
-                  Please Choose a Country, so that what you want
+                  Please Choose a Location, so that what you want
                 </DialogDescription>
               </DialogHeader>
 

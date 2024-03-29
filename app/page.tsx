@@ -15,7 +15,7 @@ async function getData({
   userId: string | undefined
   searchParams?: {
     filter?: string;
-    country?: string;
+    city?: string;
     guest?: string;
     room?: string;
     //bathroom?: string;
@@ -27,7 +27,7 @@ async function getData({
       addedLoaction: true,
       addedDescription: true,
       categoryName: searchParams?.filter ?? undefined,
-      country: searchParams?.country ?? undefined,
+      city: searchParams?.city ?? undefined,
       guests: searchParams?.guest ?? undefined,
       bedrooms: searchParams?.room ?? undefined,
       //bathrooms: searchParams?.bathroom ?? undefined,
@@ -56,7 +56,7 @@ export default function Home({
 }: {
   searchParams?: {
     filter?: string;
-    country?: string;
+    city?: string;
     guest?: string;
     room?: string;
     //bathroom?: string;

@@ -1,6 +1,7 @@
 import { createReservation } from "@/app/actions";
 import Script from "next/script";
 import { CaegoryShowcase } from "@/app/components/CategoryShowcase";
+import Slider from "@/components/ui/HomeSlider";
 import { HomeMap } from "@/app/components/HomeMap";
 import { SelectCalender } from "@/app/components/SelectCalender";
 import { ReservationSubmitButton } from "@/app/components/SubmitButtons";
@@ -70,8 +71,10 @@ export default async function HomeRoute({
       <div className="w-[75%] mx-auto mt-10 mb-12">
         <h1 className="font-medium text-2xl mb-5">{data?.title}</h1>
         <div className="relative h-[550px]">
-          <Image alt="Home Image" src={`https://vlwiwgxhkkamdbzpbxhn.supabase.co/storage/v1/object/public/images/${data?.photo}`}
-            fill className="rounded-lg h-full object-cover w-full" unoptimized />
+          {/* <Image alt="Home Image" src={`https://vlwiwgxhkkamdbzpbxhn.supabase.co/storage/v1/object/public/images/${data?.photo[0]}`}
+            fill className="rounded-lg h-full object-cover w-full" unoptimized /> */}
+          <Slider images={data?.photo!} />
+
         </div>
 
         <div className="flex justify-between gap-x-24 mt-8">

@@ -7,9 +7,22 @@ declare global {
 }
 
 import { Button } from "@/components/ui/button"
-import { Toast } from "@/components/ui/toast";
+import { toast } from 'react-toastify';
 import { Heart, Loader2, Trash } from "lucide-react"
 import { useFormStatus } from "react-dom"
+
+const showToast = (message: string) => {
+  toast(message, {
+    position: "top-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  });
+};
+
 
 const makePayment = async (price: number,
   homeId: string,
@@ -59,8 +72,8 @@ const makePayment = async (price: number,
         body: JSON.stringify(reservationData),
       }).then((t) => t.json());
 
-      
-      alert("Reservation Successful");
+
+      showToast("Payment Successful. Your Reservation has been confirmed");
     },
   };
 
@@ -68,7 +81,7 @@ const makePayment = async (price: number,
   paymentObject.open();
 
   paymentObject.on("payment.failed", function (response: any) {
-    alert("Payment failed. Please try again. Contact support for help");
+    showToast("Payment Failed. Please try again");
     paymentObject.close();
   });
 };

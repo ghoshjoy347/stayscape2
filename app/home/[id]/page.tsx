@@ -10,6 +10,8 @@ import { useCountries, useCities } from "@/app/lib/getCountries";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Image from "next/image";
 import Link from "next/link";
 
@@ -67,12 +69,11 @@ export default async function HomeRoute({
         id="razorpay-checkout-js"
         src="https://checkout.razorpay.com/v1/checkout.js"
       />
+      <ToastContainer />
 
       <div className="w-[75%] mx-auto mt-10 mb-12">
         <h1 className="font-medium text-2xl mb-5">{data?.title}</h1>
         <div className="relative h-[550px]">
-          {/* <Image alt="Home Image" src={`https://vlwiwgxhkkamdbzpbxhn.supabase.co/storage/v1/object/public/images/${data?.photo[0]}`}
-            fill className="rounded-lg h-full object-cover w-full" unoptimized /> */}
           <Slider images={data?.photo!} />
 
         </div>

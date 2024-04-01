@@ -5,7 +5,7 @@ import { AddToFavoriteButton, DeleteFromFavoriteButton, DeleteReservationButton 
 import { DeleteFromFavorite, addToFavorite, deleteReservation } from "../actions";
 
 interface iAppProps {
-  imagePath: string;
+  imagePath: string[];
   description: string;
   city: string;
   country: string;
@@ -40,7 +40,7 @@ export function ListingCard({
   return (
     <div className="flex flex-col">
       <div className="relative h-72 ">
-        <Image src={`https://vlwiwgxhkkamdbzpbxhn.supabase.co/storage/v1/object/public/images/${imagePath}`}
+        <Image src={`https://vlwiwgxhkkamdbzpbxhn.supabase.co/storage/v1/object/public/images/${imagePath[0]}`}
           alt="Image of Stays" fill className="rounded-lg h-full object-cover mb-3" />
 
         {userId && (

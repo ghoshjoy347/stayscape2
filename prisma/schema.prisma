@@ -27,7 +27,6 @@ model Home {
   bedrooms         String?
   bathrooms        String?
   country          String?
-  photo            String?
   price            Int?
   createdAT        DateTime      @default(now())
   userId           String?
@@ -36,6 +35,7 @@ model Home {
   addedLoaction    Boolean       @default(false)
   categoryName     String?
   city             String?
+  photo            String[]
   Favorite         Favorite[]
   User             User?         @relation(fields: [userId], references: [id])
   Reservation      Reservation[]

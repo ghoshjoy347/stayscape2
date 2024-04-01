@@ -72,19 +72,26 @@ export async function CreateDescription(formData: FormData) {
   const title = formData.get("title") as string;
   const description = formData.get("description") as string;
   const price = formData.get("price");
-  const imageFile = formData.get("image") as File;
+  const imageFiles = formData.getAll("images") as File[];
   const homeId = formData.get("homeId") as string;
 
   const guestNumber = formData.get("guest") as string;
   const roomNumber = formData.get("room") as string;
   const washroomNumber = formData.get("washroom") as string;
 
-  const { data: imageData } = await supabase.storage
-    .from("images")
-    .upload(`${imageFile.name}-${new Date()}`, imageFile, {
-      cacheControl: "2592000",
-      contentType: "image/png",
-    });
+  const imagePaths = [];
+  for (let i = 0; i < imageFiles.length; i++) {
+    const imageFile = imageFiles[i] as File;
+    const { data: imageData } = await supabase.storage
+      .from("images")
+      .upload(`${imageFile.name}-${new Date()}`, imageFile, {
+        cacheControl: "2592000",
+        contentType: "image/png",
+      });
+    if (imageData) {
+      imagePaths.push(imageData.path);
+    }
+  }
 
   const data = await prisma.home.update({
     where: {
@@ -97,7 +104,7 @@ export async function CreateDescription(formData: FormData) {
       bedrooms: roomNumber,
       bathrooms: washroomNumber,
       guests: guestNumber,
-      photo: imageData?.path,
+      photo: { push: imagePaths },
       addedDescription: true,
     },
   });

@@ -5,7 +5,7 @@ declare global {
     Razorpay: any;
   }
 }
-
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button"
 import { toast } from 'react-toastify';
 import { Heart, Loader2, Trash } from "lucide-react"
@@ -31,6 +31,7 @@ const makePayment = async (price: number,
 ) => {
   const diffTime = Math.abs(state[0].endDate - state[0].startDate);
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
 
   const bookingData = {
     amt: price * diffDays,
@@ -88,6 +89,7 @@ const makePayment = async (price: number,
 
 export function CreationSubmit() {
   const { pending } = useFormStatus()
+
   return (
     <>
       {pending ? (
@@ -162,6 +164,7 @@ export function ReservationSubmitButton({ price, homeId, userId, state }: { pric
   const { pending } = useFormStatus();
   const diffTime = Math.abs(state[0].endDate - state[0].startDate);
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+  const router = useRouter();
 
   const amt = price * diffDays;
 
@@ -178,6 +181,8 @@ export function ReservationSubmitButton({ price, homeId, userId, state }: { pric
             onClick={async (e) => {
               e.preventDefault();
               await makePayment(price, homeId, userId, state);
+
+              router.push("/reservations");
             }}
           >
             Make a Reservation

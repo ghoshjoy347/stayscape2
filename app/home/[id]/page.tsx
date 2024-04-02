@@ -1,19 +1,15 @@
-import { createReservation } from "@/app/actions";
 import Script from "next/script";
+import React from "react";
 import { CaegoryShowcase } from "@/app/components/CategoryShowcase";
 import Slider from "@/components/ui/HomeSlider";
 import { HomeMap } from "@/app/components/HomeMap";
 import { SelectCalender } from "@/app/components/SelectCalender";
-import { ReservationSubmitButton } from "@/app/components/SubmitButtons";
 import prisma from "@/app/lib/db";
-import { useCountries, useCities } from "@/app/lib/getCountries";
-import { Button } from "@/components/ui/button";
+import { useCities } from "@/app/lib/getCountries";
 import { Separator } from "@/components/ui/separator";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Image from "next/image";
-import Link from "next/link";
 
 async function getData(homeid: string) {
   const data = await prisma.home.findUnique({
@@ -75,7 +71,6 @@ export default async function HomeRoute({
         <h1 className="font-medium text-2xl mb-5">{data?.title}</h1>
         <div className="relative h-[550px]">
           <Slider images={data?.photo!} />
-
         </div>
 
         <div className="flex justify-between gap-x-24 mt-8">

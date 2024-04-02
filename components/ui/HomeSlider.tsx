@@ -9,7 +9,6 @@ const Slider = ({ images }: {
   images: string[];
 }) => {
   const [activeImage, setActiveImage] = useState(0)
-  console.log(images)
 
   const clickNext = () => {
     activeImage === images.length - 1

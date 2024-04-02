@@ -18,6 +18,7 @@ async function getData(userId: string) {
           Favorite: true,
           price: true,
           city: true,
+          country: true,
           description: true,
         },
       },
@@ -50,10 +51,11 @@ export default async function FavoriteRoute() {
             <ListingCard
               key={item.Home?.id}
               description={item.Home?.description as string}
-              location={item.Home?.city || "Unknown" as string}
+              city={item.Home?.city as string}
+              country={item.Home?.country as string}
               pathName="/favorites"
               homeId={item.Home?.id as string}
-              imagePath={item.Home?.photo as string}
+              imagePath={item.Home?.photo as string[]}
               price={item.Home?.price as number}
               userId={user.id}
               favoriteId={item.Home?.Favorite[0].id as string}

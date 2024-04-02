@@ -9,14 +9,12 @@ import { eachDayOfInterval } from "date-fns";
 import { KindeUser } from "@kinde-oss/kinde-auth-nextjs/dist/types";
 import Link from "next/link";
 
-import { ReservationSubmitButton } from "@/app/components/SubmitButtons";
 import { Button } from "@/components/ui/button";
 
 export function SelectCalender({
   reservation,
   user,
-  price,
-  homeId
+  homeId,
 }: {
   reservation:
   | {
@@ -26,7 +24,7 @@ export function SelectCalender({
   | undefined,
   user: KindeUser,
   price: number,
-  homeId: string
+  homeId: string,
 }) {
   const [state, setState] = useState([
     {
@@ -69,7 +67,11 @@ export function SelectCalender({
       />
 
       {user?.id ? (
-        <ReservationSubmitButton price={price} homeId={homeId} userId={user?.id} state={state} />
+        <Button className="w-full" asChild>
+          <Link
+            href={`/home/${homeId}/checkout?startDate=${state[0].startDate.toISOString()}&endDate=${state[0].endDate.toISOString()}`}
+          >Checkout</Link>
+        </Button>
       ) : (
         <Button className="w-full" asChild>
           <Link href="/api/auth/login">Make a Reservation</Link>

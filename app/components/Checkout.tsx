@@ -41,11 +41,11 @@ const Checkout: React.FC<CheckoutProps> = ({ homeDetails, userId }) => {
                     <p className="text-lg mb-2">Title: {homeDetails.title}</p>
                     <p className="text-lg mb-2">Location: {homeDetails.city}, {homeDetails.country}</p>
                     <p className="text-lg mb-2">Price per day: Rs. {homeDetails.price}</p>
-                    <div className="flex flex-wrap">
+                    {/* <div className="flex flex-wrap">
                         {homeDetails.photo && homeDetails.photo.map((image, index) => (
                             <img key={index} src={`https://vlwiwgxhkkamdbzpbxhn.supabase.co/storage/v1/object/public/images/${image}`} alt={`Image ${index}`} className="w-1/4 m-2 rounded-lg" />
                         ))}
-                    </div>
+                    </div> */}
                 </div>
 
                 <h2 className="text-2xl font-bold mb-4">Reservation Details</h2>

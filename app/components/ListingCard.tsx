@@ -83,6 +83,13 @@ export function ListingCard({
         <p className="text-muted-foreground text-sm line-clamp-2">{description}</p>
         <p className="pt-2 text-muted-foreground">
           <span className="font-medium text-black">₹ {price}</span> / Night</p>
+        {
+          startDate && endDate && (
+            <p className="pt-2 text-muted-foreground">
+              <span className="font-medium text-black">From: {startDate.toDateString()}</span> <br /> <span className="font-medium text-black">To: {endDate.toDateString()}</span>
+            </p>
+          )
+        }
       </Link>
     </div>
   );

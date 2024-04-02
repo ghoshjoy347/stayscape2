@@ -19,6 +19,7 @@ async function getData(userId: string) {
         select: {
           id: true,
           city: true,
+          country: true,
           photo: true,
           description: true,
           price: true,
@@ -70,10 +71,11 @@ export default async function ReservationsRoute() {
                 startDate={item.startDate}
                 endDate={item.endDate}
                 description={item.Home?.description as string}
-                location={item.Home?.city as string}
+                city={item.Home?.city as string}
+                country={item.Home?.country as string}
                 pathName="/favorites"
                 homeId={item.Home?.id as string}
-                imagePath={item.Home?.photo as string}
+                imagePath={item.Home?.photo as string[]}
                 price={item.Home?.price as number}
                 userId={user.id}
                 favoriteId={item.Home?.Favorite[0]?.id as string}

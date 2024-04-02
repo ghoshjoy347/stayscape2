@@ -57,7 +57,7 @@ export default async function MyHomes() {
           {data.map((item) => (
             <ListingCard
               key={item.id}
-              imagePath={item.photo as string}
+              imagePath={item.photo as string[]}
               homeId={item.id}
               price={item.price as number}
               description={item.description as string}

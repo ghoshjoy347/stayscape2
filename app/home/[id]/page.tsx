@@ -10,6 +10,7 @@ import { Separator } from "@/components/ui/separator";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Rating from "@/components/ui/Rating";
 
 async function getData(homeid: string) {
   const data = await prisma.home.findUnique({
@@ -120,6 +121,7 @@ export default async function HomeRoute({
           </form>
 
         </div>
+                <Rating/>
       </div>
     </>
   )

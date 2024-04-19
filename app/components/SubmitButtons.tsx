@@ -75,6 +75,7 @@ const makePayment = async (price: number,
 
 
       showToast("Payment Successful. Your Reservation has been confirmed");
+      window.location.href = "/reservations";
     },
   };
 
@@ -182,7 +183,7 @@ export function ReservationSubmitButton({ price, homeId, userId, state }: { pric
               e.preventDefault();
               await makePayment(price, homeId, userId, state);
 
-              router.push("/reservations");
+            //  router.push("/reservations");
             }}
           >
             Make a Reservation

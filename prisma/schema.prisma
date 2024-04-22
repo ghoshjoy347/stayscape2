@@ -17,6 +17,7 @@ model User {
   Favorite     Favorite[]
   Home         Home[]
   Reservation  Reservation[]
+  Comments     Comments[]
 }
 
 model Home {
@@ -39,6 +40,7 @@ model Home {
   Favorite         Favorite[]
   User             User?         @relation(fields: [userId], references: [id])
   Reservation      Reservation[]
+  Comments         Comments[]
 }
 
 model Favorite {
@@ -48,6 +50,16 @@ model Favorite {
   createAt DateTime @default(now())
   Home     Home?    @relation(fields: [homeId], references: [id])
   User     User?    @relation(fields: [userId], references: [id])
+}
+
+model Comments {
+  id      String @id @default(uuid())
+  content String
+  userId  String
+  homeId  String
+  rating  Int?
+  Home    Home   @relation(fields: [homeId], references: [id])
+  User    User   @relation(fields: [userId], references: [id])
 }
 
 model Reservation {

@@ -227,3 +227,16 @@ export async function deleteReservation(formData: FormData) {
 
   return redirect("/reservations");
 }
+
+export async function createComment(formData: FormData) {
+  const homeId = formData.get('homeId') as string
+  const userId = formData.get('userId') as string
+  const commentText = formData.get('comment') as string;
+  const rating = parseInt(formData.get('rating') as string)
+
+  const comment = await prisma.comments.create({
+    data: { content: commentText, homeId, userId, rating }
+  })
+
+  return comment;
+}

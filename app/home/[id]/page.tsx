@@ -41,6 +41,21 @@ async function getData(homeid: string) {
           firstName: true,
         },
       },
+
+      Comments: {
+        select: {
+          content: true,
+          rating: true,
+          id: true,
+          User: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true
+            }
+          }
+        }
+      }
     },
   });
 
@@ -55,6 +70,7 @@ export default async function HomeRoute({
   const data = await getData(params.id);
   const { getCityByValue, getCityByCountryAndName } = useCities();
   const city = getCityByValue(data?.city as string);
+  const comments = data?.Comments
   const { getUser } = getKindeServerSession();
   const user = await getUser();
 
@@ -122,7 +138,7 @@ export default async function HomeRoute({
           </form>
 
         </div>
-                <RatingAndReview/>
+        <RatingAndReview comments={comments} homeId={params.id} userId={user?.id}/>
       </div>
     </>
   )

@@ -10,8 +10,13 @@ interface Review {
   text: string;
 }
 
-export default function RatingAndReview({ comments, homeId, userId }:
-  { comments?: any, homeId: string, userId: any }) {
+interface RatingAndReview {
+  comments?: any,
+  homeId: string,
+  userId: any
+}
+
+export default function RatingAndReview({ comments, homeId, userId }: RatingAndReview) {
   const [hydration, setHydration] = useState<boolean>(false);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [newReview, setNewReview] = useState('');

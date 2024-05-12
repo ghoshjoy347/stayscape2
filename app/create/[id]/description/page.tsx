@@ -32,6 +32,12 @@ export default function DescriptionPage({
                         <Label>Price</Label>
                         <Input type="number" name="price" required placeholder="Price per Night in ₹" min={1000} />
                     </div>
+
+                    <div className="flex flex-col gap-y-2">
+                        <Label>Wikipedia Link</Label>
+                        <Input type="text" name="wikipedia-link" required placeholder="Enter the wiki link of your city" />
+                    </div>
+
                     <div className="flex flex-col gap-y-2">
                         <Label>Image</Label>
                         <Input type="file" name="images" multiple accept="image/*" required />

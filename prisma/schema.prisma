@@ -36,6 +36,7 @@ model Home {
   addedLoaction    Boolean       @default(false)
   categoryName     String?
   city             String?
+  wikiLink         String?
   photo            String[]
   Favorite         Favorite[]
   User             User?         @relation(fields: [userId], references: [id])

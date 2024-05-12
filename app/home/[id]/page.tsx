@@ -1,3 +1,4 @@
+// 'use client'
 import Script from "next/script";
 import React from "react";
 import { CaegoryShowcase } from "@/app/components/CategoryShowcase";
@@ -12,6 +13,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Rating from "@/components/ui/Rating";
 import RatingAndReview from "@/components/ui/ReviewAndRating";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 async function getData(homeid: string) {
   const data = await prisma.home.findUnique({
@@ -29,6 +32,7 @@ async function getData(homeid: string) {
       price: true,
       city: true,
       country: true,
+      wikiLink: true,
       Reservation: {
         where: {
           homeId: homeid,
@@ -77,6 +81,10 @@ export default async function HomeRoute({
   const anotherCity = getCityByCountryAndName(data?.country as string, data?.city as string);
   const latLang: [number, number] = [Number(anotherCity?.latitude), Number(anotherCity?.longitude)]
 
+  const getCityInfo = () => {
+    // const city = data?.
+  }
+
   return (
     <>
       <Script
@@ -122,7 +130,17 @@ export default async function HomeRoute({
 
             <Separator className="my-7" />
 
-            <p className="text-muted-foreground">{data?.description}</p>
+            <div className="flex flex-col gap-5">
+              <p className="text-muted-foreground">{data?.description}</p>
+
+
+              {data?.wikiLink &&
+                <Link href={(data?.wikiLink as string)} target="_blank">
+                  <Button className="w-1/3">More Information</Button>
+                </Link>
+              }
+
+            </div>
 
             <Separator className="my-7" />
 
@@ -137,8 +155,10 @@ export default async function HomeRoute({
             <SelectCalender reservation={data?.Reservation} user={user!} price={data?.price!} homeId={params.id} />
           </form>
 
+
         </div>
-        <RatingAndReview comments={comments} homeId={params.id} userId={user?.id}/>
+        <RatingAndReview comments={comments} homeId={params.id} userId={user?.id} />
+
       </div>
     </>
   )

@@ -75,6 +75,8 @@ export async function CreateDescription(formData: FormData) {
   const imageFiles = formData.getAll("images") as File[];
   const homeId = formData.get("homeId") as string;
 
+  const wikiLink = formData.get('wikipedia-link') as string;
+
   const guestNumber = formData.get("guest") as string;
   const roomNumber = formData.get("room") as string;
   const washroomNumber = formData.get("washroom") as string;
@@ -104,6 +106,7 @@ export async function CreateDescription(formData: FormData) {
       bedrooms: roomNumber,
       bathrooms: washroomNumber,
       guests: guestNumber,
+      wikiLink: wikiLink,
       photo: { push: imagePaths },
       addedDescription: true,
     },

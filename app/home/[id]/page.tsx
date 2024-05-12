@@ -15,6 +15,7 @@ import Rating from "@/components/ui/Rating";
 import RatingAndReview from "@/components/ui/ReviewAndRating";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { FaInfoCircle } from "react-icons/fa";
 
 async function getData(homeid: string) {
   const data = await prisma.home.findUnique({
@@ -81,9 +82,6 @@ export default async function HomeRoute({
   const anotherCity = getCityByCountryAndName(data?.country as string, data?.city as string);
   const latLang: [number, number] = [Number(anotherCity?.latitude), Number(anotherCity?.longitude)]
 
-  const getCityInfo = () => {
-    // const city = data?.
-  }
 
   return (
     <>
@@ -130,13 +128,13 @@ export default async function HomeRoute({
 
             <Separator className="my-7" />
 
-            <div className="flex flex-col gap-5">
+            <div className="flex items-center gap-2">
               <p className="text-muted-foreground">{data?.description}</p>
 
 
               {data?.wikiLink &&
                 <Link href={(data?.wikiLink as string)} target="_blank">
-                  <Button className="w-1/3">More Information</Button>
+                  <FaInfoCircle className="w-3.5 h-3.5" />
                 </Link>
               }
 

@@ -12,7 +12,7 @@ const colors = {
 
 function App() {
   const [currentValue, setCurrentValue] = useState(0);
-  const [hoverValue, setHoverValue] = useState(undefined);
+  const [hoverValue, setHoverValue] = useState<number | undefined>(undefined);
   const stars = Array(5).fill(0)
 
   const handleClick = (value: number) => {

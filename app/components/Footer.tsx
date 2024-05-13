@@ -22,7 +22,7 @@ export default function Footer() {
           StayScape
           </Link>
           <p className="mt-2 text-xs text-justify text-gray-400">
-          Discover your perfect stay with us. Our platform offers diverse accommodations, seamless booking, and personalized experiences. Whether it's a cozy cabin or a luxury villa, find your home away from home.
+          Discover your perfect stay with us. Our platform offers diverse accommodations, seamless booking, and personalized experiences. Whether it is a cozy cabin or a luxury villa, find your home away from home.
           </p>
           <div className="flex mt-4 mb-5">
             <Input type="email" placeholder="Email" />

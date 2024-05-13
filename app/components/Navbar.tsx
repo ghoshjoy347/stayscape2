@@ -13,7 +13,7 @@ export function Navbar() {
           <Image
             src={DesktopLogo}
             alt="Desktop Logo"
-            className="w-32 hidden lg:block"
+            className="w-40 h-20 hidden lg:block" unoptimized
           />
 
           <Image

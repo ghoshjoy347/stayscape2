@@ -5,7 +5,7 @@ import { Input } from "../components/input"
 
 export default function Footer() {
   return (
-    <footer className="bg-zinc-700 mt-16">
+    <footer className="bg-zinc-600 mt-20 rounded-3xl">
       <div
         className="w-full 
         flex flex-col flex-wrap
@@ -55,18 +55,23 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href={"/dashboard"} className="text-gray-300">
-                  Dashboard
+                <Link href={"/my-homes"} className="text-gray-300">
+                  My Listings
                 </Link>
               </li>
               <li>
-                <Link href={"/addhome"} className="text-gray-300">
-                  Be a StayScaper
+                <Link href={"/favorites"} className="text-gray-300">
+                  My Favorites
                 </Link>
               </li>
               <li>
-                <Link href={"/category"} className="text-gray-300">
-                  Categories
+                <Link href={"/create/bd0990b4-77a6-41ab-88e8-21d8b45c2172/structure"} className="text-gray-300">
+                  Add Your Homes
+                </Link>
+              </li>
+              <li>
+                <Link href={"/reservations"} className="text-gray-300">
+                  My Reservations
                 </Link>
               </li>
             </ul>

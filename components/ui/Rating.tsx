@@ -15,11 +15,11 @@ function App() {
   const [hoverValue, setHoverValue] = useState(undefined);
   const stars = Array(5).fill(0)
 
-  const handleClick = value => {
+  const handleClick = (value: number) => {
     setCurrentValue(value)
   }
 
-  const handleMouseOver = newHoverValue => {
+  const handleMouseOver = (newHoverValue: number) => {
     setHoverValue(newHoverValue)
   };
 
